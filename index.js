@@ -8,25 +8,32 @@ const koa = require('koa'),
     render = require('./render'),
     app = new koa();
 
-//app.use(co.wrap(function* responseTime(ctx,next){
-//  const start = new Date;
-//  yield next();
-//  let ms = new Date - start;
-//  console.log(`response time is ${ms} ms`);
-//}));
-//
-//app.use(co.wrap(function* logging(ctx,next){
-//  const start = new Date;
-//  yield next();
-//  let used = new Date - start;
-//  console.log(ctx.originalUrl + "\n" +ctx.method+"\n"+used+'ms')
-//}));
-//
-//app.use(co.wrap(function* body(ctx,next){
-//  yield next();
-//  if(ctx.path !== '/' ) return;
-//  ctx.body = "hello world";
-//}));
+
+/**
+ * APP Interface:
+ *
+ * 1. /user , method: get , Oauth -> redirect to mainPage
+ *
+ * 2. /search:keyword , method: get , param: keyword , return a list of pre selected
+ *
+ * 3. /getArticle:id , method: get , param: guid , return a Article
+ *
+ * 4. /public:id , method: put , param: guid , return a status and the public link
+ *
+ * 5. /delete:id , method: delete , param: guid ,return a status
+ *
+ * 6. /getList:userID , method: get , param: userID , return a list of article with status
+ *
+ */
+
+/**
+ * Data Structure:
+ *
+ * 1. user: userID username
+ *
+ * 2. note: userID noteContent noteInform
+ *
+ */
 
 router.get('/user',function* (){
   console.log('it work');
@@ -34,8 +41,11 @@ router.get('/user',function* (){
   console.log(this.body);
 });
 
-app
-    .use(router.routes())
+router.get('/getArticle:id',function* (){
+
+});
+
+app.use(router.routes())
     .use(router.allowedMethods());
 
 app.listen(3000);

@@ -1,4 +1,5 @@
 **/node_modules/
 _config.json
+_db_config.json
 .DS_Store
 .idea

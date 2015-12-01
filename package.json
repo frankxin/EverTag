@@ -10,10 +10,11 @@
   "date": "2015.11.5",
   "license": "",
   "dependencies": {
-    "koa": "1.1.1",
     "co": "4.x",
-    "koa-router": "5.2.x",
     "co-views": "2.1.x",
-    "evernote": "1.25.x"
+    "evernote": "1.25.x",
+    "koa": "1.1.1",
+    "koa-router": "5.2.x",
+    "mongoose": "^4.2.8"
   }
 }

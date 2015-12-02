@@ -6,6 +6,7 @@ const koa = require('koa'),
     co = require('co'),
     router = require('koa-router')(),
     render = require('./render'),
+    user = require('./lib/user'),
     app = new koa();
 
 
@@ -36,9 +37,9 @@ const koa = require('koa'),
  */
 
 router.get('/user',function* (){
-  console.log('it work');
-  this.body = yield render('user');
-  console.log(this.body);
+  console.log('get /user');
+  //this.body = yield render('user');
+  user();
 });
 
 router.get('/getArticle:id',function* (){

@@ -7,6 +7,9 @@ const koa = require('koa'),
     router = require('koa-router')(),
     render = require('./render'),
     user = require('./lib/user'),
+    search = require('./lib/search'),
+    getNote = require('./lib/getNote'),
+    share = require('./lib/share'),
     app = new koa();
 
 
@@ -36,15 +39,53 @@ const koa = require('koa'),
  *
  */
 
-router.get('/user',function* (){
+router.get('/user',getUser);
+// url to /search/{keyword}
+router.get('/search/:kw',searchPost);
+router.get('/get_note/:guid',getPost);
+router.put('/share/:guid',sharePost);
+
+function* getUser(){
   console.log('get /user');
-  //this.body = yield render('user');
-  user();
-});
+  yield user(this);
+  console.log('send user');
+}
 
-router.get('/getArticle:id',function* (){
+function* searchPost(){
+  var searchData;
+  console.log('search start');
 
-});
+  searchData = yield search(this.params.kw);
+
+  this.response.body = searchData;
+}
+
+function* getPost(){
+  var guid = this.params.guid,
+      note;
+
+  console.log('get note start');
+
+  note = yield getNote(guid);
+
+  this.response.body = note;
+}
+
+function* sharePost(){
+  var guid = this.params.guid,
+      note,status;
+
+  note = yield getNote(guid);
+
+
+  status = yield share(guid,this);
+
+  this.response.body = {
+    status : status
+  }
+}
+
+
 
 app.use(router.routes())
     .use(router.allowedMethods());
